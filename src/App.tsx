@@ -25,22 +25,28 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <Flex flexDirection="column" fontSize="xl" height="full" width="full">
-        <Flex height="50px" width="full" flexDirection="column">
+        <Flex
+          height="50px"
+          width="full"
+          flexDirection="column"
+          alignItems="end"
+        >
           <ColorModeSwitcher justifySelf="flex-end" />
         </Flex>
         <Flex
           minH="100vh"
-          p={3}
+          p={2}
           flexDirection="row"
           flexWrap="wrap"
           width="full"
+          justifyContent="space-evenly"
         >
           {photos.map((photo: any) => (
             <Flex flexDirection="column">
               <Image
                 src={photo.urls.thumb}
                 boxSize="300px"
-                margin="5"
+                m="2"
                 objectFit="cover"
               />
             </Flex>
