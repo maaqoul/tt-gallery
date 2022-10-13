@@ -4,19 +4,19 @@ import theme from "../theme";
 import Header from "../ui/Header";
 import Main from "../ui/Main";
 import ImageThumbnail from "../components/ImageThumbnail";
+import { fetchPhotos } from "../services/api";
 
 export const App = () => {
-  const [photos, setPhotos] = React.useState([]);
+  const [photos, setPhotos] = React.useState<Response[]>([]);
   React.useEffect(() => {
-    fetch(
-      "https://api.unsplash.com/photos/?client_id=0d54d7bf8f81c9ee80a75d9e1263fbb6b8267fad9d908e597b9f7c4f6bcdee23"
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        if (res) {
-          setPhotos(res);
-        }
-      });
+    (async () => {
+      try {
+        const response = await fetchPhotos();
+        setPhotos(response);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
   }, []);
   return (
     <ChakraProvider theme={theme}>
@@ -27,7 +27,11 @@ export const App = () => {
         <Main>
           <Flex flexWrap="wrap" padding={5} width="full">
             {photos.map((photo: any) => (
-              <ImageThumbnail key={photo.id} thumbnailSrc={photo.urls.thumb} />
+              <ImageThumbnail
+                key={photo.id}
+                fullScreenImage={photo.urls.regular}
+                thumbnailSrc={photo.urls.small}
+              />
             ))}
           </Flex>
         </Main>
