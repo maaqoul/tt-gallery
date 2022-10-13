@@ -2,6 +2,8 @@ import * as React from "react";
 import { ChakraProvider, Flex } from "@chakra-ui/react";
 import theme from "../theme";
 import Header from "../ui/Header";
+import Main from "../ui/Main";
+import ImageThumbnail from "../components/ImageThumbnail";
 
 export const App = () => {
   const [photos, setPhotos] = React.useState([]);
@@ -18,10 +20,17 @@ export const App = () => {
   }, []);
   return (
     <ChakraProvider theme={theme}>
-      <Flex height="full" width="full">
+      <Flex height="full" width="full" flexDirection="column" padding={5}>
         <Header>
           <Flex>options</Flex>
         </Header>
+        <Main>
+          <Flex flexWrap="wrap" padding={5} width="full">
+            {photos.map((photo: any) => (
+              <ImageThumbnail key={photo.id} thumbnailSrc={photo.urls.thumb} />
+            ))}
+          </Flex>
+        </Main>
       </Flex>
     </ChakraProvider>
   );
