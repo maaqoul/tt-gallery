@@ -6,6 +6,7 @@ export interface ApiError {
 export interface QueryOptions {
     query?: string;
     color?: string;
+    per_page?: number
 }
 
 interface url {

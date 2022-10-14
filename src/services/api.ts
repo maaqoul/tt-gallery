@@ -25,11 +25,17 @@ async function handleApiCall(url: string): Promise<Response[]> {
         throwCommonError(data as unknown as ApiError);
     }
 
-    return data
+    return data.results ? data.results : data
 }
 
 export async function fetchPhotos(): Promise<Response[]> {
     const url = generateEndpoint('photos');
-    console.log('photos :', url)
+    return handleApiCall(url)
+}
+
+export async function searchPhotos(options: QueryOptions): Promise<Response[]> {
+    const url = generateQuery(generateEndpoint('search/photos'), Object.entries(options)
+        .reduce((accumulatedOptions, currentEntry) =>
+            ({ ...accumulatedOptions, [currentEntry[0]]: currentEntry[1] }), {}));
     return handleApiCall(url)
 }
